@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://863le85d8wr1"]
+
+[ext_resource type="Script" uid="uid://cw0dhgp8nh3wy" path="res://scripts/global_template.lua" id="1_m5i73"]
+
+[node name="Global Variables" type="Node" unique_id=1933414563]
+script = ExtResource("1_m5i73")
