@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://cbmhn18n6he77"]
+
+[ext_resource type="PackedScene" uid="uid://dsu4i8u4km8uy" path="res://scenes/player.tscn" id="1_bc5iu"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_bc5iu"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_fm4en"]
+sky_material = SubResource("ProceduralSkyMaterial_bc5iu")
+
+[sub_resource type="Environment" id="Environment_d5dl1"]
+background_mode = 2
+sky = SubResource("Sky_fm4en")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_y44tv"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bc5iu"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fm4en"]
+size = Vector3(1.9902344, 0.02758789, 1.9912109)
+
+[node name="Environment" type="Node3D" unique_id=220544837]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=731773695]
+environment = SubResource("Environment_d5dl1")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1557051133]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Player" parent="." unique_id=855912040 instance=ExtResource("1_bc5iu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 27.391123, -0.008586884)
+
+[node name="Ground" type="StaticBody3D" parent="." unique_id=360906686]
+transform = Transform3D(318.27774, 0, 0, 0, 10, 0, 0, 0, 327.62915, 0, 0, 0)
+collision_mask = 6
+
+[node name="GroundMesh" type="MeshInstance3D" parent="Ground" unique_id=12066709]
+mesh = SubResource("PlaneMesh_y44tv")
+surface_material_override/0 = SubResource("StandardMaterial3D_bc5iu")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground" unique_id=517116499]
+shape = SubResource("BoxShape3D_fm4en")
+debug_color = Color(0.87140125, 0, 0.41428858, 0.41960785)

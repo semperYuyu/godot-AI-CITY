@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://dsu4i8u4km8uy"]
+
+[ext_resource type="Script" uid="uid://d004kvwynh6rl" path="res://scripts/player.lua" id="1_3vyb7"]
+[ext_resource type="Script" uid="uid://bgfn823qu81ga" path="res://scripts/camera.lua" id="2_g2els"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_u8vuu"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_3vyb7"]
+
+[node name="Player" type="CharacterBody3D" unique_id=855912040]
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("1_3vyb7")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1526993980]
+mesh = SubResource("CapsuleMesh_u8vuu")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=963873266]
+shape = SubResource("CapsuleShape3D_3vyb7")
+
+[node name="CameraPivot" type="Node3D" parent="." unique_id=252339682]
+script = ExtResource("2_g2els")
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot" unique_id=488614616]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6819805, 1.900497)

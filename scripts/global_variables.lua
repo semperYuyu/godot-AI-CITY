@@ -1,4 +1,4 @@
-local global_template = {
+local global_variables = {
 	extends = Node,
 }
 
@@ -10,6 +10,7 @@ local function find_module(dir, module)
 		local current_item = module_scripts:get_next()
 
 		while current_item ~= "" do
+
 			if module_scripts:current_is_dir() and not current_item:match('%.%.?') then
 
 				local can_search_more = find_module(dir .. current_item .. "/", module)
@@ -37,8 +38,8 @@ local function load_module(module)
 end
 
 
-function global_template:_ready()
+function global_variables:_ready()
 	table.insert(package.searchers, 1, load_module)
 end
 
-return global_template
+return global_variables
