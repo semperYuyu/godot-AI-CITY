@@ -22,7 +22,15 @@ function house:_process()
 	if self.entered then
 		if Input:is_action_just_pressed("INTERACT") then
 		local textbox = TEXTBOX_SCENE:instantiate()
+		local textboxTextContent = textbox:get_node("TextContent/Text")
+		textboxTextContent.AllText = {
+			"This is the first line of dialogue... Mewow meow Mewow meow Mewow meow Mewow meow Mewow meow Mewow meow ";
+			"This is the second line of dialogue... meow Mewow meow Mewow meow Mewow meow Mewow meow Mewow meow Mewow ";
+			"This is the third";
+			"This is the fourth";
+		}
 
+		textboxTextContent.AlternateText = {"okiii get outta here"; "no more text for you"}
 		if GlobalVariables.global_interact then
 			GlobalVariables.global_interact = false
 		TEXTBOX_ARRAY:add_child(textbox)

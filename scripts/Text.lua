@@ -1,10 +1,19 @@
 local Text = {
 	extends = Label,
 	textDone = false;
-	can_interact = true;
+	iterationDone = false;
+	iterator = 1;
 }
 
 function Text:_ready()
+	if type(self.AllText) == "table" then
+		self.text = self.AllText[1]
+	else
+		self.text = self.AllText
+		self.iterationDone = true;
+	end
+
+
 	self.visible_characters = 0
 	CHARACTER_WAIT_TIMER = self:get_node('../CharacterWait')
 	UI_ELEMENT = self:get_node("/root/Environment/TextBoxes/TextBox")
@@ -18,8 +27,21 @@ end
 
 function Text:_process()
 	if self.textDone and Input:is_action_just_pressed("INTERACT") then
-		UI_ELEMENT:queue_free()
-		GlobalVariables.global_interact = true
+		if self.iterationDone then
+			UI_ELEMENT:queue_free()
+			GlobalVariables.global_interact = true
+		else
+			self.iterator = self.iterator + 1
+			self.text = self.AllText[self.iterator]
+			if self.iterator == #self.AllText then
+				self.AllText = self.AlternateText
+				self.iterationDone = true
+			end
+			self.visible_characters = 0
+			self.textDone = false;
+			CHARACTER_WAIT_TIMER.one_shot = false;
+			CHARACTER_WAIT_TIMER:start()
+		end
 	elseif Input:is_action_just_pressed("ALTERNATE") then
 		self:finish_text()
 	end
