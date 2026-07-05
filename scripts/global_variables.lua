@@ -1,5 +1,6 @@
 local global_variables = {
-	extends = Node,
+	extends = Node;
+	global_interact = true;
 }
 
 local function find_module(dir, module)

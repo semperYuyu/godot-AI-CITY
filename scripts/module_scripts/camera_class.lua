@@ -16,8 +16,10 @@ end;
 camera_class.process_mouse = function(camera, event)
 	-- this goes into _input, required for pivot_camera
 
-	if event:is_class("InputEventMouseMotion") then
-		camera.mouse_delta = event.relative
+	if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED then
+		if event:is_class("InputEventMouseMotion") then
+			camera.mouse_delta = event.relative
+		end
 	end
 
 	if event:is_class("InputEventMouseButton") and event.pressed then

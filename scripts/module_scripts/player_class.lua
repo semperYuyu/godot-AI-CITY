@@ -1,6 +1,6 @@
 local player_class = {
 	-- all these properties are inherited, don't need to use self.prop name in here to use
-	speed = 50;
+	speed = 25;
 	direction = Vector3.ZERO;
 	gravity = 100;
 	velocity_y = 0;
@@ -22,28 +22,22 @@ player_class.new = function(player, camera)
 		return;
 	end
 	player.camera = camera
-	
+
 end;
 
 player_class.apply_gravity = function(player, dt)
-	if not player:is_on_floor() then
-		player.velocity = Vector3(player.velocity.x, player.velocity.y - (player.gravity), player.velocity.z)
-	else
-		player.velocity = Vector3(player.velocity.x, 0, player.velocity.z)
-	end
-end
-
-player_class.move = function(player, dt)
-
-	player.direction = Input:get_vector("MOVE_LEFT", "MOVE_RIGHT", "MOVE_FORWARD", "MOVE_BACKWARD")
-
-	if Input:is_action_just_pressed("JUMP") and player:is_on_floor()then
+	if Input:is_action_just_pressed("JUMP") and player:is_on_floor() then
 		player.velocity_y = player.jump_strength
 	elseif player:is_on_floor() then
 		player.velocity_y = 0
 	else
 		player.velocity_y = player.velocity_y - player.gravity * dt
 	end
+end
+
+player_class.move = function(player, dt)
+	player:apply_gravity(dt)
+	player.direction = Input:get_vector("MOVE_LEFT", "MOVE_RIGHT", "MOVE_FORWARD", "MOVE_BACKWARD")
 
 	local horizontal_velocity =
 		player.camera.global_transform.basis *
@@ -52,7 +46,6 @@ player_class.move = function(player, dt)
 
 	player.velocity =  Vector3(horizontal_velocity.x, player.velocity_y, horizontal_velocity.z)
 
-	print(player.velocity)
 	player:move_and_slide()
 end;
 

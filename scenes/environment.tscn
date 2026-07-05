@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://cbmhn18n6he77"]
 
 [ext_resource type="PackedScene" uid="uid://dsu4i8u4km8uy" path="res://scenes/player.tscn" id="1_bc5iu"]
+[ext_resource type="PackedScene" uid="uid://ca7fpmjpb0pkr" path="res://scenes/Objects/wall.tscn" id="2_fm4en"]
+[ext_resource type="PackedScene" uid="uid://cwdwyefipbpcb" path="res://scenes/Objects/house.tscn" id="3_d5dl1"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_bc5iu"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -15,13 +17,13 @@ sky = SubResource("Sky_fm4en")
 tonemap_mode = 2
 glow_enabled = true
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_y44tv"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fm4en"]
+albedo_color = Color(0.07757052, 0.07548582, 0.06983856, 1)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bc5iu"]
-albedo_color = Color(0, 0, 0, 1)
+[sub_resource type="BoxMesh" id="BoxMesh_d5dl1"]
+material = SubResource("StandardMaterial3D_fm4en")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_fm4en"]
-size = Vector3(1.9902344, 0.02758789, 1.9912109)
 
 [node name="Environment" type="Node3D" unique_id=220544837]
 
@@ -36,13 +38,29 @@ shadow_enabled = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 27.391123, -0.008586884)
 
 [node name="Ground" type="StaticBody3D" parent="." unique_id=360906686]
-transform = Transform3D(318.27774, 0, 0, 0, 10, 0, 0, 0, 327.62915, 0, 0, 0)
 collision_mask = 6
 
-[node name="GroundMesh" type="MeshInstance3D" parent="Ground" unique_id=12066709]
-mesh = SubResource("PlaneMesh_y44tv")
-surface_material_override/0 = SubResource("StandardMaterial3D_bc5iu")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground" unique_id=1059569568]
+transform = Transform3D(2277.2183, 0, 0, 0, 5, 0, 0, 0, 1951.2935, 0, 0, 0)
+mesh = SubResource("BoxMesh_d5dl1")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground" unique_id=517116499]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground" unique_id=384511085]
+transform = Transform3D(2277.2183, 0, 0, 0, 5, 0, 0, 0, 1951.2935, 0, 0, 0)
 shape = SubResource("BoxShape3D_fm4en")
-debug_color = Color(0.87140125, 0, 0.41428858, 0.41960785)
+
+[node name="Walls" type="Node3D" parent="." unique_id=796967088]
+
+[node name="Wall" parent="Walls" unique_id=1243004861 instance=ExtResource("2_fm4en")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.017676175, 41.725082, 975.0581)
+
+[node name="Wall2" parent="Walls" unique_id=970676955 instance=ExtResource("2_fm4en")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.016198337, 29.905739, -976.7619)
+
+[node name="Houses" type="Node3D" parent="." unique_id=1521170830]
+
+[node name="House" parent="Houses" unique_id=2041354721 instance=ExtResource("3_d5dl1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.82458, 14.972355, -28.494785)
+
+[node name="NPCs" type="Node3D" parent="." unique_id=344379041]
+
+[node name="TextBoxes" type="Node3D" parent="." unique_id=1589164431]

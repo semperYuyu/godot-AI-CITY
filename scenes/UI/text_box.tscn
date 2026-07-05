@@ -1,0 +1,84 @@
+[gd_scene format=3 uid="uid://c2ssllmammc33"]
+
+[ext_resource type="Script" uid="uid://b0iihpn74rot" path="res://scripts/Text.lua" id="1_40ig8"]
+
+[node name="TextBox" type="Control" unique_id=349000054]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 14.0
+offset_right = 14.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_horizontal_guides_ = [437.0]
+metadata/_edit_vertical_guides_ = [236.0]
+
+[node name="Background" type="ColorRect" parent="." unique_id=1619864994]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.12100001
+anchor_top = 0.63900006
+anchor_right = 0.855
+anchor_bottom = 0.92
+offset_left = 27.607986
+offset_top = -0.072052
+offset_right = 0.039978027
+offset_bottom = -0.16003418
+grow_horizontal = 2
+grow_vertical = 0
+color = Color(0, 0, 0, 1)
+
+[node name="TextContent" type="Control" parent="." unique_id=516334165]
+layout_mode = 1
+anchor_left = 0.14500001
+anchor_top = 0.63900006
+anchor_right = 0.855
+anchor_bottom = 0.92
+offset_left = -0.040008545
+offset_top = -0.072052
+offset_right = 0.039978027
+offset_bottom = -0.16003418
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Asterisk" type="Label" parent="TextContent" unique_id=1736432168]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.046000004
+anchor_top = 0.15900001
+anchor_right = 0.1
+anchor_bottom = 0.76400006
+offset_left = 0.37199783
+offset_top = 0.061998367
+offset_right = 0.19999695
+offset_bottom = -0.04800415
+grow_vertical = 2
+theme_override_font_sizes/font_size = 80
+text = "*"
+
+[node name="Text" type="Label" parent="TextContent" unique_id=309175570]
+custom_minimum_size = Vector2(1, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.078
+anchor_top = 0.126
+anchor_right = 0.94000006
+anchor_bottom = 0.87900007
+offset_left = -1.8040009
+offset_top = 1.0679989
+offset_right = -1.920044
+offset_bottom = 1.0219879
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 80
+text = "Mewow Meow Mewow Meow Mewow Meow Mewow Meow Mewow Meow Mewow Meow Mewow Meow "
+autowrap_mode = 2
+text_direction = 1
+script = ExtResource("1_40ig8")
+
+[node name="CharacterWait" type="Timer" parent="TextContent" unique_id=358919736]
+wait_time = 0.009999999999999998
+autostart = true
+
+[connection signal="timeout" from="TextContent/CharacterWait" to="TextContent/Text" method="_on_character_wait_timeout"]
