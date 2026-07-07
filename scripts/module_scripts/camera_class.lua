@@ -1,3 +1,5 @@
+-- move this into state machine folder and change to match structure
+
 local camera_class = {
 	mouse_delta = Vector3.ZERO;
 }

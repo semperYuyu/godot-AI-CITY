@@ -1,3 +1,5 @@
+-- move this into state machine folder and change to match structure
+
 local player_class = {
 	-- all these properties are inherited, don't need to use self.prop name in here to use
 	speed = 25;

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cbmhn18n6he77"]
 
-[ext_resource type="PackedScene" uid="uid://dsu4i8u4km8uy" path="res://scenes/player.tscn" id="1_bc5iu"]
+[ext_resource type="PackedScene" uid="uid://dsu4i8u4km8uy" path="res://scenes/Entities/player.tscn" id="1_bc5iu"]
 [ext_resource type="PackedScene" uid="uid://ca7fpmjpb0pkr" path="res://scenes/Objects/wall.tscn" id="2_fm4en"]
 [ext_resource type="PackedScene" uid="uid://cwdwyefipbpcb" path="res://scenes/Objects/house.tscn" id="3_d5dl1"]
 
@@ -60,6 +60,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.016198337, 29.905739, -976.
 
 [node name="House" parent="Houses" unique_id=2041354721 instance=ExtResource("3_d5dl1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.82458, 14.972355, -28.494785)
+
+[node name="House2" parent="Houses" unique_id=1607032137 instance=ExtResource("3_d5dl1")]
+transform = Transform3D(0.3545848, 0, 0.93502384, 0, 1, 0, -0.93502384, 0, 0.3545848, 126.72512, 14.972355, -119.97121)
+
+[node name="House3" parent="Houses" unique_id=1106395962 instance=ExtResource("3_d5dl1")]
+transform = Transform3D(-0.8519281, 0, -0.52365875, 0, 1, 0, 0.52365875, 0, -0.8519281, -10.82458, 14.972355, -264.45914)
 
 [node name="NPCs" type="Node3D" parent="." unique_id=344379041]
 
