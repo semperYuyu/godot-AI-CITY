@@ -10,7 +10,7 @@ end;
 NPCStates.Idle = {
 	-- state for staying still for a random amount of time
 	Enter = function (self)
-		print("entering idle...")
+		print(self.name and self.name .. " is now idle" or "random npc is now idle")
 		self.idleTimeSet = false;
 		self.currentIdleTime = 0;
 		self.maxIdleTime = 4;
