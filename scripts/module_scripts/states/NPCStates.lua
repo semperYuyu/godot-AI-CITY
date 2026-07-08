@@ -54,7 +54,7 @@ NPCStates.Idle = {
 
 NPCStates.Walk = {
 	Enter = function (self)
-		print('entering walk...')
+		print(self.name and self.name .. " is now walking" or "random npc is now walking")
 	end;
 
 	Exit = function (self)
