@@ -3,7 +3,7 @@ local global_variables = {
 	global_interact = true;
 }
 
-local function find_module(dir, module)
+local function find_module(dir, module, is_root_dir)
 		dir = dir:sub(-1, -1) == "/" and dir or dir .. "/"
 		local module_scripts = DirAccess:open(dir)
 
@@ -25,13 +25,18 @@ local function find_module(dir, module)
 		end
 
 		module_scripts:list_dir_end()
-		error('Could not find module: ' .. module, 2)
+		
+		if is_root_dir then
+			error('Could not find module: ' .. module, 2)
+		end;
+
+		return nil;
 end
 
 local function load_module(module)
 	local static_path = 'res://scripts/module_scripts'
 
-	local dynamic_path = find_module(static_path, module)
+	local dynamic_path = find_module(static_path, module, true)
 	local file = FileAccess:open(dynamic_path, FileAccess.READ)
 	local file_content = file:get_as_text()
 	file:close()

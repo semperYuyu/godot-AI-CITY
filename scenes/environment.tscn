@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://dsu4i8u4km8uy" path="res://scenes/Entities/player.tscn" id="1_bc5iu"]
 [ext_resource type="PackedScene" uid="uid://ca7fpmjpb0pkr" path="res://scenes/Objects/wall.tscn" id="2_fm4en"]
 [ext_resource type="PackedScene" uid="uid://cwdwyefipbpcb" path="res://scenes/Objects/house.tscn" id="3_d5dl1"]
+[ext_resource type="PackedScene" uid="uid://c614my0pbdqlx" path="res://scenes/Entities/npc.tscn" id="4_hlc4h"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_bc5iu"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -35,7 +36,7 @@ transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545
 shadow_enabled = true
 
 [node name="Player" parent="." unique_id=855912040 instance=ExtResource("1_bc5iu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 27.391123, -0.008586884)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 27.391123, -120.904434)
 
 [node name="Ground" type="StaticBody3D" parent="." unique_id=360906686]
 collision_mask = 6
@@ -61,12 +62,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.016198337, 29.905739, -976.
 [node name="House" parent="Houses" unique_id=2041354721 instance=ExtResource("3_d5dl1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.82458, 14.972355, -28.494785)
 
-[node name="House2" parent="Houses" unique_id=1607032137 instance=ExtResource("3_d5dl1")]
-transform = Transform3D(0.3545848, 0, 0.93502384, 0, 1, 0, -0.93502384, 0, 0.3545848, 126.72512, 14.972355, -119.97121)
-
-[node name="House3" parent="Houses" unique_id=1106395962 instance=ExtResource("3_d5dl1")]
-transform = Transform3D(-0.8519281, 0, -0.52365875, 0, 1, 0, 0.52365875, 0, -0.8519281, -10.82458, 14.972355, -264.45914)
-
 [node name="NPCs" type="Node3D" parent="." unique_id=344379041]
+
+[node name="NPC" parent="NPCs" unique_id=418314309 instance=ExtResource("4_hlc4h")]
 
 [node name="TextBoxes" type="Node3D" parent="." unique_id=1589164431]
