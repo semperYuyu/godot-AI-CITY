@@ -1,6 +1,5 @@
 local NPCStates = {
 	extends = Node,
-	currentState = "";
 }
 
 function NPCStates:_ready()

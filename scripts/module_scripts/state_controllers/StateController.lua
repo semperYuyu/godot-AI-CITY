@@ -8,7 +8,7 @@ local StateController = {
 
 StateController.new = function (Node, defaultState)
 	if not defaultState then
-		error(".new() function needs a defualt state passed as second parameter")
+		error(".new() function needs a state passed as second parameter as a default\n.new(Node, State)")
 	end;
 	Node.currentState = StateController.currentState;
 	Node.switchState = StateController.switchState;
