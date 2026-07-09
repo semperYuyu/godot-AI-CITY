@@ -10,9 +10,10 @@ NPCStates.Idle = {
 	-- state for staying still for a random amount of time
 	Enter = function (self)
 		print(self.name and self.name .. " is now idle" or "random npc is now idle")
-		self.idleTimeSet = false;
-		self.currentIdleTime = 0;
+		local rng = RandomNumberGenerator:new()
+		rng:randomize()
 		self.maxIdleTime = 4;
+		self.currentIdleTime = rng:randi_range(1, self.maxIdleTime);
 	end;
 
 	Exit = function (self)
@@ -25,14 +26,6 @@ NPCStates.Idle = {
 	Update = function (self, dt)
 		if not dt then
 			error("pass dt from _process into self:process() function")
-		end;
-		if not self.idleTimeSet then
-			local rng = RandomNumberGenerator:new()
-			rng:randomize()
-			self.currentIdleTime = rng:randi_range(1, self.maxIdleTime)
-			print(self.currentIdleTime)
-			self.idleTimeSet = true;
-			return;
 		end;
 
 		if self.currentIdleTime <= 0 then
