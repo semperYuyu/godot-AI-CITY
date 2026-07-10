@@ -34,7 +34,6 @@ function Text:_process()
 			self.iterator = self.iterator + 1
 			self.text = self.AllText[self.iterator]
 			if self.iterator == #self.AllText then
-				self.AllText = self.AlternateText
 				self.iterationDone = true
 			end
 			self.visible_characters = 0

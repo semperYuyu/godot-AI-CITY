@@ -6,17 +6,28 @@ function NPCStates:_ready()
 	NPC_STATE_CONTROLLER = require("NPCStateController")
 end;
 
+local function randomTime(maxTime)
+	local rng = RandomNumberGenerator:new()
+	rng:randomize()
+	return rng:randi_range(1, maxTime)
+end;
+
+local function randomAngle(maxDegrees)
+	local rng = RandomNumberGenerator:new()
+	rng:randomize()
+	return math.rad(rng:randi_range(1, maxDegrees))
+end;
+
 NPCStates.Idle = {
 	-- state for staying still for a random amount of time
 	Enter = function (self)
-		print(self.name and self.name .. " is now idle" or "random npc is now idle")
-		self.idleTimeSet = false;
-		self.currentIdleTime = 0;
+		print(self.name .. " is now idle")
 		self.maxIdleTime = 4;
+		self.currentIdleTime = randomTime(self.maxIdleTime);
 	end;
 
 	Exit = function (self)
-		print('exiting idle...')
+		print(self.name .. ' is exiting idle...')
 		self.idleTimeSet = nil;
 		self.currentIdleTime = nil;
 		self.maxIdleTime = nil;
@@ -24,66 +35,131 @@ NPCStates.Idle = {
 
 	Update = function (self, dt)
 		if not dt then
-			error("pass dt from _process into self:process() function")
+			error("pass dt from _process into self:process() function");
 		end;
-		if not self.idleTimeSet then
-			local rng = RandomNumberGenerator:new()
-			rng:randomize()
-			self.currentIdleTime = rng:randi_range(1, self.maxIdleTime)
-			print(self.currentIdleTime)
-			self.idleTimeSet = true;
+
+		if not self:is_on_floor() then
+			self:switchState(NPCStates.Fall)
+			return;
+		end;
+
+		if self.target then
+			self:switchState(NPCStates.Follow)
 			return;
 		end;
 
 		if self.currentIdleTime <= 0 then
+			-- transition to walk
 			self:switchState(NPCStates.Walk)
 			return;
-		end
+		end;
 
 		self.currentIdleTime = self.currentIdleTime - dt
 	end;
 
 	Physics_Update = function (self, dt)
-		if not dt then
-			error("pass dt from _physics_process into self:physics_process() function")
-		end;
-
+		-- doesn't use dt since wont be moving
 	end;
 }
 
 NPCStates.Walk = {
 	Enter = function (self)
-		print(self.name and self.name .. " is now walking" or "random npc is now walking")
+		print(self.name .. " is now walking")
+		self.rotation = Vector3(0, randomAngle(360), 0);
+		self.speed = 10;
+		self.maxWalkTime = 5;
+		self.currentWalkTime = randomTime(self.maxWalkTime)
 	end;
 
 	Exit = function (self)
-		print('exiting walk')
+		print(self.name .. ' is exiting walk')
+		-- keep rotation as it is
+		self.speed = nil;
+		self.maxWalkTime = nil;
+		self.currentWalkTime = nil;
 	end;
 
 	Update = function (self, dt)
-		self:switchState(NPCStates.Idle)
+		if not dt then
+			error("pass dt from _process into self:process() function")
+		end;
+
+		if not self:is_on_floor() then
+			self:switchState(NPCStates.Fall)
+			return;
+		elseif self.target then
+			self:switchState(NPCStates.Follow)
+			return;
+		elseif self.currentWalkTime <= 0 then
+			self:switchState(NPCStates.Idle)
+			return;
+		end;
+
+		self.currentWalkTime = self.currentWalkTime - dt;
 	end;
 
 	Physics_Update = function (self, dt)
-		print('i am walk-logicing rn')
+		-- make sure npc is CharacterBody3D otherwise move_and_slide wont work
+		-- dont add gravity here, add a fall state
+		self.velocity = self.global_transform.basis * Vector3(0, 0, -self.speed)
+		self:move_and_slide()
+
 	end;
 }
 
 NPCStates.Follow = {
-	Enter = function ()
-
+	Enter = function (self)
+		print(self.name .. " is following player")
+		self.speed = 10;
 	end;
 
-	Exit = function ()
-
+	Exit = function (self)
+		print('aw they left')
+		self.direction = nil;
+		self.speed = nil;
 	end;
 
-	Update = function ()
-
+	Update = function (self, dt)
+		if not self.target then
+			self:switchState(NPCStates.Idle)
+			return;
+		elseif not self:is_on_floor() then
+			self:switchState(NPCStates.Fall)
+			return;
+		end;
 	end;
 
-	Physics_Update = function ()
+	Physics_Update = function (self, dt)
+		if not self.target then return end;
 
+		self:look_at(Vector3(self.target.position.x, self.position.y, self.target.position.z))
+		self.velocity = self.global_transform.basis * Vector3(0, 0, -self.speed)
+		self:move_and_slide()
+	end;
+}
+
+NPCStates.Fall = {
+	Enter = function (self)
+		print(self.name .. " is falling D:")
+		self.gravity = 10;
+	end;
+
+	Exit = function (self)
+		print(self.name .. " is no longer falling :D")
+		self.gravity = nil;
+		self.velocity = Vector3(self.velocity.x, 0, self.velocity.z)
+	end;
+
+	Update = function (self, dt)
+		if self:is_on_floor() then
+			self:switchState(NPCStates.Idle)
+			return;
+		end;
+	end;
+
+	Physics_Update = function (self, dt)
+		self.velocity = Vector3(self.velocity.x, self.velocity.y - self.gravity * dt, self.velocity.z)
+		self:move_and_slide()
 	end;
 }
 

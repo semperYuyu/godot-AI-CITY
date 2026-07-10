@@ -29,8 +29,6 @@ function house:_process()
 			"This is the third";
 			"This is the fourth";
 		}
-
-		textboxTextContent.AlternateText = {"okiii get outta here"; "no more text for you"}
 		if GlobalVariables.global_interact then
 			GlobalVariables.global_interact = false
 		TEXTBOX_ARRAY:add_child(textbox)
