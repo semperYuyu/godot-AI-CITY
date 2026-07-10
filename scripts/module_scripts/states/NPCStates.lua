@@ -43,9 +43,10 @@ NPCStates.Idle = {
 			return;
 		end;
 
-		--[[
-			Follow state change goes here
-		]]--
+		if self.target then
+			self:switchState(NPCStates.Follow)
+			return;
+		end;
 
 		if self.currentIdleTime <= 0 then
 			-- transition to walk
@@ -72,7 +73,7 @@ NPCStates.Walk = {
 
 	Exit = function (self)
 		print(self.name .. ' is exiting walk')
-		self.direction = nil;
+		-- keep rotation as it is
 		self.speed = nil;
 		self.maxWalkTime = nil;
 		self.currentWalkTime = nil;
@@ -86,14 +87,10 @@ NPCStates.Walk = {
 		if not self:is_on_floor() then
 			self:switchState(NPCStates.Fall)
 			return;
-		end;
-
-		--[[
-			Follow state change goes here
-		]]--
-
-		if self.currentWalkTime <= 0 then
-			-- transition to idle
+		elseif self.target then
+			self:switchState(NPCStates.Follow)
+			return;
+		elseif self.currentWalkTime <= 0 then
 			self:switchState(NPCStates.Idle)
 			return;
 		end;
@@ -111,20 +108,33 @@ NPCStates.Walk = {
 }
 
 NPCStates.Follow = {
-	Enter = function ()
-
+	Enter = function (self)
+		print(self.name .. " is following player")
+		self.speed = 10;
 	end;
 
-	Exit = function ()
-
+	Exit = function (self)
+		print('aw they left')
+		self.direction = nil;
+		self.speed = nil;
 	end;
 
-	Update = function ()
-
+	Update = function (self, dt)
+		if not self.target then
+			self:switchState(NPCStates.Idle)
+			return;
+		elseif not self:is_on_floor() then
+			self:switchState(NPCStates.Fall)
+			return;
+		end;
 	end;
 
-	Physics_Update = function ()
+	Physics_Update = function (self, dt)
+		if not self.target then return end;
 
+		self:look_at(Vector3(self.target.position.x, self.position.y, self.target.position.z))
+		self.velocity = self.global_transform.basis * Vector3(0, 0, -self.speed)
+		self:move_and_slide()
 	end;
 }
 
