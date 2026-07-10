@@ -132,7 +132,7 @@ NPCStates.Follow = {
 	Physics_Update = function (self, dt)
 		if not self.target then return end;
 
-		self:look_at(Vector3(self.target.position.x, self.position.y, self.target.position.z))
+		self:look_at(Vector3(self.target.position.x, self.position.y, self.target.position.z)) -- looks at player x and z, ignores player y so it doesnt FLY
 		self.velocity = self.global_transform.basis * Vector3(0, 0, -self.speed)
 		self:move_and_slide()
 	end;
