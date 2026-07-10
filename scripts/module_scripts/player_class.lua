@@ -1,3 +1,5 @@
+-- turn this into a State Object please :D :D :D
+
 local player_class = {
 	-- all these properties are inherited, don't need to use self.prop name in here to use
 	speed = 25;
