@@ -2,6 +2,7 @@ local global_variables = {
 	extends = Node;
 	global_interact = true;
 	gravity = 100;
+	mouse_sensitivity = 0.2 / 25; -- max should be 0.2, change 1 with a slider value that would be adjusted in menu
 }
 
 local function find_module(dir, module, is_root_dir)

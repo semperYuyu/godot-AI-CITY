@@ -31,13 +31,15 @@ end;
 
 PlayerStates.Idle = {
 	Enter = function (self)
-		print('player is idle now')
 		return;
 	end;
 
 	Exit = function (self)
-		print('player is no longer idle')
 		return;
+	end;
+
+	Input = function(self, event)
+
 	end;
 
 	Update = function (self)
@@ -61,15 +63,17 @@ PlayerStates.Idle = {
 
 PlayerStates.Walk = {
 	Enter = function (self)
-		print('omg player is walk')
 		self.walkSpeed = 20
 		return;
 	end;
 
 	Exit = function (self)
-		print('aw player stop walk')
 		self.walkSpeed = nil;
 		return;
+	end;
+
+	Input = function(self, event)
+
 	end;
 
 	Update = function (self, dt)
@@ -108,6 +112,10 @@ PlayerStates.Jump = {
 		return;
 	end;
 
+	Input = function(self, event)
+
+	end;
+
 	Update = function (self, dt)
 			if self.jumpStrength <= 0 then
 			self:switchState(PlayerStates.Fall)
@@ -134,6 +142,10 @@ PlayerStates.Fall = {
 		self.velocity = Vector3.ZERO
 		GlobalVariables.global_interact = true
 		return;
+	end;
+
+	Input = function(self, event)
+
 	end;
 
 	Update = function (self)
