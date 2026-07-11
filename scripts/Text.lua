@@ -1,60 +1,41 @@
 local Text = {
-	extends = Label,
+	extends = RichTextLabel,
 	textDone = false;
 	iterationDone = false;
 	iterator = 1;
 }
 
+local function render()
+    local done = STR:sub(1, revealed)
+    local rest = STR:sub(revealed + 1)
+    RICH_TEXT_LABEL.text = "[color=" .. reveal_color .. "]" .. done .. "[/color]"
+                          .. "[color=" .. BASE_COLOUR .. "]" .. rest .. "[/color]"
+end
+-- now that you have working text display code
+-- DO NOT USE THIS AS IT IS
+-- convert to state machine
 function Text:_ready()
-	if type(self.AllText) == "table" then
-		self.text = self.AllText[1]
-	else
-		self.text = self.AllText
-		self.iterationDone = true;
-	end
-
-
-	self.visible_characters = 0
-	CHARACTER_WAIT_TIMER = self:get_node('../CharacterWait')
-	UI_ELEMENT = self:get_node("/root/Environment/TextBoxes/TextBox")
-end
-
-Text.finish_text = function(text)
-	text.visible_characters = #text.text
-	text.textDone = true
-	CHARACTER_WAIT_TIMER.one_shot = true -- stopping the timer
-end
-
-function Text:_process()
-	if self.textDone and Input:is_action_just_pressed("INTERACT") then
-		if self.iterationDone then
-			UI_ELEMENT:queue_free()
-			GlobalVariables.global_interact = true
-		else
-			self.iterator = self.iterator + 1
-			self.text = self.AllText[self.iterator]
-			if self.iterator == #self.AllText then
-				self.iterationDone = true
-			end
-			self.visible_characters = 0
-			self.textDone = false;
-			CHARACTER_WAIT_TIMER.one_shot = false;
-			CHARACTER_WAIT_TIMER:start()
-		end
-	elseif Input:is_action_just_pressed("ALTERNATE") then
-		self:finish_text()
-	end
-end
-
-function Text:_on_character_wait_timeout()
-	self.visible_characters = self.visible_characters + 1
-	if self.visible_characters >= #self.text - 1 then
-		self:finish_text()
-	end
+	self:add_theme_font_size_override("normal_font_size", 90)
+	self.scroll_active = false
+STR = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In in cursus urna, non consectetur justo. Pellentesque tristique'
+BASE_COLOUR = "black"
+reveal_color = "white"
+revealed = 0
+timer = 0
+interval = 0.002 -- seconds per character
+RICH_TEXT_LABEL = self
+render() -- initial display, all BASE_COLOUR
 end
 
 
+function Text:_process(delta)
+    if revealed >= #STR then return end
+    timer = timer + delta
+    if timer >= interval then
+        timer = timer - interval
+        revealed = revealed + 1
+        render()
+    end
+end
 
-
-
-return Text
+return Text;

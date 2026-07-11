@@ -6,7 +6,11 @@ local StateController = {
 		end;
 	};
 }
-
+--------
+-- Make all of these their own files (NPCStateController, PlayerStateController, etc)
+-- and just import base state controller stuff into it
+-- so i dont have too much clutter here
+-- this file shouldn't have a
 StateController.newNPC = function (NPCNode, defaultState)
 	if not NPCNode then
 		error(".newNPC() function needs a CharacterBody3D node passed as first parameter\nSyntax is \".newNPC(--> NPCNode <--, defaultState)\"")
@@ -52,6 +56,21 @@ StateController.newCamera = function (CameraNode, defaultState)
 	CameraNode:switchState(defaultState);
 end; -- check for node TYPE too
 
+StateController.newTextBox = function (ControlNode, defaultState)
+	if not ControlNode then
+		error("..newTextBox() function needs a Control node passed as first parameter\nSyntax is \"..newTextBox(--> ControlNode <--, defaultState)\"")
+	elseif not defaultState then
+		error("..newTextBox() function needs a State passed as second parameter\nSyntax is \"..newTextBox(ControlNode, --> defaultState <--)\"")
+	end;
+
+	ControlNode.currentState = StateController.currentState;
+	ControlNode.switchState = StateController.switchState;
+	ControlNode.process = StateController.process;
+	ControlNode.physics_process = StateController.physics_process;
+	ControlNode.input = StateController.input;
+	ControlNode:switchState(defaultState);
+end;
+-------
 StateController.switchState = function (self, state)
 	self.currentState.Exit(self)
 	self.currentState = state;

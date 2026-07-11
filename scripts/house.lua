@@ -2,6 +2,10 @@ local house = {
 	extends = StaticBody3D,
 	entered = false;
 }
+-- >;3
+-- this needs to be state-d to as interactable rather than the code being here
+-- DO NOT do this yet until you choose to add new interactables please thatll take so long
+-- the interact area (Area3D) needs the state ofc
 function house:_ready()
 	TEXTBOX_SCENE = ResourceLoader:load("res://scenes/UI/text_box.tscn")
 	TEXTBOX_ARRAY = self:get_node("/root/Environment/TextBoxes")
@@ -31,7 +35,7 @@ function house:_process()
 		}
 		if GlobalVariables.global_interact then
 			GlobalVariables.global_interact = false
-		TEXTBOX_ARRAY:add_child(textbox)
+			TEXTBOX_ARRAY:add_child(textbox)
 		end
 
 	end
