@@ -73,6 +73,7 @@ ALTERNATE={
 3d_physics/layer_2="Player"
 3d_physics/layer_3="NPCs"
 3d_physics/layer_4="Interactables"
+3d_physics/layer_5="Camera"
 
 [physics]
 

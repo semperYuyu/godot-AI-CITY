@@ -34,6 +34,10 @@ NPCStates.Idle = {
 		return;
 	end;
 
+	Input = function(self, event)
+
+	end;
+
 	Update = function (self, dt)
 		if not dt then
 			error("pass dt from _process into self:process() function");
@@ -82,6 +86,10 @@ NPCStates.Walk = {
 		return;
 	end;
 
+	Input = function(self, event)
+
+	end;
+
 	Update = function (self, dt)
 		if not dt then
 			error("pass dt from _process into self:process() function")
@@ -125,6 +133,10 @@ NPCStates.Follow = {
 		return;
 	end;
 
+	Input = function(self, event)
+
+	end;
+
 	Update = function (self, dt)
 		if not self.target then
 			self:switchState(NPCStates.Idle)
@@ -159,6 +171,10 @@ NPCStates.Fall = {
 		self.gravity = nil;
 		self.velocity = Vector3(self.velocity.x, 0, self.velocity.z)
 		return;
+	end;
+
+	Input = function(self, event)
+
 	end;
 
 	Update = function (self)

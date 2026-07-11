@@ -19,4 +19,4 @@ mesh = SubResource("CapsuleMesh_u8vuu")
 shape = SubResource("CapsuleShape3D_3vyb7")
 
 [node name="Camera" parent="." unique_id=1227405846 instance=ExtResource("2_r47wa")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.59462476, 1.0709305)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.29956877, 0)

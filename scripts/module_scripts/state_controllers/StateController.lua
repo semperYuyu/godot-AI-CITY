@@ -17,8 +17,9 @@ StateController.newNPC = function (NPCNode, defaultState)
 	NPCNode.switchState = StateController.switchState;
 	NPCNode.process = StateController.process;
 	NPCNode.physics_process = StateController.physics_process;
+	NPCNode.input = StateController.input;
 	NPCNode:switchState(defaultState);
-end;
+end; -- check for node TYPE too
 
 StateController.newPlayer = function (PlayerNode, CameraNode, defaultState)
 	if not PlayerNode then
@@ -32,8 +33,9 @@ StateController.newPlayer = function (PlayerNode, CameraNode, defaultState)
 	PlayerNode.switchState = StateController.switchState;
 	PlayerNode.process = StateController.process;
 	PlayerNode.physics_process = StateController.physics_process;
+	PlayerNode.input = StateController.input;
 	PlayerNode:switchState(defaultState);
-end;
+end; -- check for node TYPE too
 
 StateController.newCamera = function (CameraNode, defaultState)
 	if not CameraNode then
@@ -41,12 +43,14 @@ StateController.newCamera = function (CameraNode, defaultState)
 	elseif not defaultState then
 		error(".newCamera() function needs a State passed as second parameter\nSyntax is \".newCamera(CameraNode, --> defaultState <--)\"")
 	end;
+
 	CameraNode.currentState = StateController.currentState;
 	CameraNode.switchState = StateController.switchState;
 	CameraNode.process = StateController.process;
 	CameraNode.physics_process = StateController.physics_process;
+	CameraNode.input = StateController.input;
 	CameraNode:switchState(defaultState);
-end;
+end; -- check for node TYPE too
 
 StateController.switchState = function (self, state)
 	self.currentState.Exit(self)
@@ -60,6 +64,10 @@ end;
 
 StateController.physics_process = function (self, dt)
 	self.currentState.Physics_Update(self, dt)
+end;
+
+StateController.input = function (self, event)
+	self.currentState.Input(self, event)
 end;
 
 return StateController;
