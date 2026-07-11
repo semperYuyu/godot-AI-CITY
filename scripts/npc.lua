@@ -3,10 +3,9 @@ local npc = {
 }
 
 function npc:_ready()
-	print("i am ready !")
 	local state_controller = require("StateController")
-	local npc_states = require("NPCStates")
-	state_controller.new(self, npc_states.Idle)
+	local NPCStates = require("NPCStates")
+	state_controller.newNPC(self, NPCStates.Idle)
 end
 
 function npc:_process(dt)

@@ -2,10 +2,6 @@ local NPCStates = {
 	extends = Node,
 }
 
-function NPCStates:_ready()
-	NPC_STATE_CONTROLLER = require("NPCStateController")
-end;
-
 local function randomTime(maxTime)
 	local rng = RandomNumberGenerator:new()
 	rng:randomize()
@@ -18,19 +14,24 @@ local function randomAngle(maxDegrees)
 	return math.rad(rng:randi_range(1, maxDegrees))
 end;
 
+local function distanceToPlayer(NPC)
+	return NPC.global_position:distance_to(NPC.target.global_position)
+end;
+
 NPCStates.Idle = {
-	-- state for staying still for a random amount of time
 	Enter = function (self)
-		print(self.name .. " is now idle")
+		-- print(self.name .. " is now idle")
 		self.maxIdleTime = 4;
 		self.currentIdleTime = randomTime(self.maxIdleTime);
+		return;
 	end;
 
 	Exit = function (self)
-		print(self.name .. ' is exiting idle...')
+		-- print(self.name .. ' is exiting idle...')
 		self.idleTimeSet = nil;
 		self.currentIdleTime = nil;
 		self.maxIdleTime = nil;
+		return;
 	end;
 
 	Update = function (self, dt)
@@ -57,26 +58,28 @@ NPCStates.Idle = {
 		self.currentIdleTime = self.currentIdleTime - dt
 	end;
 
-	Physics_Update = function (self, dt)
-		-- doesn't use dt since wont be moving
+	Physics_Update = function (self)
+		-- do nothing !
 	end;
 }
 
 NPCStates.Walk = {
 	Enter = function (self)
-		print(self.name .. " is now walking")
+		-- print(self.name .. " is now walking")
 		self.rotation = Vector3(0, randomAngle(360), 0);
 		self.speed = 10;
 		self.maxWalkTime = 5;
 		self.currentWalkTime = randomTime(self.maxWalkTime)
+		return;
 	end;
 
 	Exit = function (self)
-		print(self.name .. ' is exiting walk')
+		-- print(self.name .. ' is exiting walk')
 		-- keep rotation as it is
 		self.speed = nil;
 		self.maxWalkTime = nil;
 		self.currentWalkTime = nil;
+		return;
 	end;
 
 	Update = function (self, dt)
@@ -103,20 +106,23 @@ NPCStates.Walk = {
 		-- dont add gravity here, add a fall state
 		self.velocity = self.global_transform.basis * Vector3(0, 0, -self.speed)
 		self:move_and_slide()
-
 	end;
 }
 
 NPCStates.Follow = {
 	Enter = function (self)
-		print(self.name .. " is following player")
+		-- print(self.name .. " is following player")
 		self.speed = 10;
+		self.stoppingDistance = 4;
+		return;
 	end;
 
 	Exit = function (self)
-		print('aw they left')
+		-- print('aw they left')
 		self.direction = nil;
 		self.speed = nil;
+		self.stoppingDistance = nil;
+		return;
 	end;
 
 	Update = function (self, dt)
@@ -133,24 +139,29 @@ NPCStates.Follow = {
 		if not self.target then return end;
 
 		self:look_at(Vector3(self.target.position.x, self.position.y, self.target.position.z)) -- looks at player x and z, ignores player y so it doesnt FLY
-		self.velocity = self.global_transform.basis * Vector3(0, 0, -self.speed)
-		self:move_and_slide()
+
+		if distanceToPlayer(self) > self.stoppingDistance then
+			self.velocity = self.global_transform.basis * Vector3(0, 0, -self.speed)
+			self:move_and_slide()
+		end
 	end;
 }
 
 NPCStates.Fall = {
 	Enter = function (self)
-		print(self.name .. " is falling D:")
-		self.gravity = 10;
+		-- print(self.name .. " is falling D:")
+		self.gravity = GlobalVariables.gravity;
+		return;
 	end;
 
 	Exit = function (self)
-		print(self.name .. " is no longer falling :D")
+		-- print(self.name .. " is no longer falling :D")
 		self.gravity = nil;
 		self.velocity = Vector3(self.velocity.x, 0, self.velocity.z)
+		return;
 	end;
 
-	Update = function (self, dt)
+	Update = function (self)
 		if self:is_on_floor() then
 			self:switchState(NPCStates.Idle)
 			return;

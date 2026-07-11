@@ -3,21 +3,19 @@ local player = {
 }
 
 function player:_ready()
-	PLAYER_CLASS = require("player_class")
-	PLAYER_CAMERA = self:get_node("./CameraPivot/Camera3D")
-	PLAYER_CLASS.new(self, PLAYER_CAMERA)
-end
+	local state_controller = require("StateController")
+	local PlayerStates = require("PlayerStates")
+	local player_camera = self:get_node("Camera")
+	state_controller.newPlayer(self, Camera, PlayerStates.Idle)
+end;
+
+function player:_process(dt)
+	self:process(dt)
+end;
 
 function player:_physics_process(dt)
-	if GlobalVariables.global_interact then
-		self:move(dt)
-		if Input:is_action_just_pressed("DISPLAY_MOUSE") then
-			Input:set_mouse_mode(Input.mouse_mode ==
-			Input.MOUSE_MODE_VISIBLE and Input.MOUSE_MODE_CAPTURED or
-			Input.MOUSE_MODE_VISIBLE)
-		end
-	end
-end
+	self:physics_process(dt)
+end;
 
 
 return player

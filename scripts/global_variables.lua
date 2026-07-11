@@ -1,6 +1,7 @@
 local global_variables = {
 	extends = Node;
 	global_interact = true;
+	gravity = 100;
 }
 
 local function find_module(dir, module, is_root_dir)
@@ -25,7 +26,7 @@ local function find_module(dir, module, is_root_dir)
 		end
 
 		module_scripts:list_dir_end()
-		
+
 		if is_root_dir then
 			error('Could not find module: ' .. module, 2)
 		end;

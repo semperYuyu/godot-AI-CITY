@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dsu4i8u4km8uy"]
 
 [ext_resource type="Script" uid="uid://d004kvwynh6rl" path="res://scripts/player.lua" id="1_3vyb7"]
-[ext_resource type="Script" uid="uid://bgfn823qu81ga" path="res://scripts/camera.lua" id="2_g2els"]
+[ext_resource type="PackedScene" uid="uid://dluoa05mxmapi" path="res://scenes/Objects/camera.tscn" id="2_r47wa"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_u8vuu"]
 
@@ -18,8 +18,5 @@ mesh = SubResource("CapsuleMesh_u8vuu")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=963873266]
 shape = SubResource("CapsuleShape3D_3vyb7")
 
-[node name="CameraPivot" type="Node3D" parent="." unique_id=252339682]
-script = ExtResource("2_g2els")
-
-[node name="Camera3D" type="Camera3D" parent="CameraPivot" unique_id=488614616]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6819805, 1.900497)
+[node name="Camera" parent="." unique_id=1227405846 instance=ExtResource("2_r47wa")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.59462476, 1.0709305)

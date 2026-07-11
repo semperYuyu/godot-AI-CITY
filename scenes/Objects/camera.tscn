@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://dluoa05mxmapi"]
+
+[ext_resource type="Script" uid="uid://bgfn823qu81ga" path="res://scripts/camera.lua" id="1_7e23o"]
+
+[node name="Camera" type="Node3D" unique_id=1227405846]
+script = ExtResource("1_7e23o")
+
+[node name="VerticalPivot" type="Node3D" parent="." unique_id=1184208104]
+
+[node name="HorizontalPivot" type="Node3D" parent="VerticalPivot" unique_id=1557061745]
+
+[node name="CameraSpring" type="SpringArm3D" parent="VerticalPivot/HorizontalPivot" unique_id=621935668]
+
+[node name="Camera3D" type="Camera3D" parent="VerticalPivot/HorizontalPivot/CameraSpring" unique_id=92781490]
