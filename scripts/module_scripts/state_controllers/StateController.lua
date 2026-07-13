@@ -1,5 +1,4 @@
 local StateController = {
-	extends = Node;
 	currentState = {
 		Exit = function (self)
 			print("Initializing State Machine for " .. self.name .. "...")
@@ -11,6 +10,11 @@ local StateController = {
 -- and just import base state controller stuff into it
 -- so i dont have too much clutter here
 -- this file shouldn't have a
+StateController.add = function(NewStateController)
+	setmetatable(NewStateController, { __index = StateController })
+	return;
+end;
+
 StateController.newNPC = function (NPCNode, defaultState)
 	if not NPCNode then
 		error(".newNPC() function needs a CharacterBody3D node passed as first parameter\nSyntax is \".newNPC(--> NPCNode <--, defaultState)\"")
