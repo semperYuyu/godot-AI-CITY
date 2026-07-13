@@ -5,8 +5,10 @@ local textbox = {
 function textbox:_ready()
 	if not self.total_dialogue then
 		self.total_dialogue = {
-			"you forgor to set self.total_dialogue";
-			"just do self.total_dialogue = {\'text\'; \'text\' ; \'text\'} in _ready() or under the extends"
+			"This is default dialogue";
+			"This is here becaus you forgor to set self.total_dialogue";
+			"to fix, set self.total_dialogue = {\'text\'; \'text\' ; \'text\'} in _ready()";
+			"you could also set total_dialogue directly inside of the node object at the top"
 		}
 	end;
 	local StateController = require("StateController")

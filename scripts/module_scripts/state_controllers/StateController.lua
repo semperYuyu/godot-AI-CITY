@@ -47,7 +47,7 @@ StateController.newCamera = function (CameraNode, defaultState)
 	elseif not defaultState then
 		error(".newCamera() function needs a State passed as second parameter\nSyntax is \".newCamera(CameraNode, --> defaultState <--)\"")
 	end;
-
+	CameraNode.mouse_delta = Vector2.ZERO
 	CameraNode.currentState = StateController.currentState;
 	CameraNode.switchState = StateController.switchState;
 	CameraNode.process = StateController.process;

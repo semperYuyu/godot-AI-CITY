@@ -2,6 +2,14 @@ local TextBoxStates = {
 	extends = Node,
 }
 local function render(ControlNode)
+	local current_char = ControlNode.current_text:sub(ControlNode.revealed_count, ControlNode.revealed_count)
+	print(current_char)
+	if current_char == "," then
+		ControlNode.max_time = 0.5
+	else
+		ControlNode.max_time = 0.02
+	end
+
 	local revealed = ControlNode.current_text:sub(1, ControlNode.revealed_count)
 	local remaining = ControlNode.current_text:sub(ControlNode.revealed_count + 1)
 	ControlNode.TextNode.text =
@@ -77,7 +85,6 @@ TextBoxStates.Active = {
 		end;
 
 		self.timer = self.timer + dt
-
 		if self.timer >= self.max_time then
 			self.timer = 0
 			render(self)
