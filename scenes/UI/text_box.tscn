@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c2ssllmammc33"]
 
-[ext_resource type="Script" uid="uid://b0iihpn74rot" path="res://scripts/Text.lua" id="1_40ig8"]
+[ext_resource type="Script" uid="uid://bl14p2nsbpel6" path="res://scripts/textbox.lua" id="1_o8p8f"]
 
 [node name="TextBox" type="Control" unique_id=349000054]
 layout_mode = 3
@@ -11,6 +11,7 @@ offset_left = 14.0
 offset_right = 14.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_o8p8f")
 metadata/_edit_horizontal_guides_ = [437.0]
 metadata/_edit_vertical_guides_ = [236.0]
 
@@ -57,7 +58,7 @@ grow_vertical = 2
 theme_override_font_sizes/font_size = 80
 text = "*"
 
-[node name="Text" type="Label" parent="TextContent" unique_id=309175570]
+[node name="Text" type="RichTextLabel" parent="TextContent" unique_id=1561939278]
 custom_minimum_size = Vector2(1, 1)
 layout_mode = 1
 anchors_preset = -1
@@ -71,13 +72,6 @@ offset_right = -1.920044
 offset_bottom = 1.0219879
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_font_sizes/font_size = 80
+bbcode_enabled = true
 autowrap_mode = 2
 text_direction = 1
-script = ExtResource("1_40ig8")
-
-[node name="CharacterWait" type="Timer" parent="TextContent" unique_id=358919736]
-wait_time = 0.009999999999999998
-autostart = true
-
-[connection signal="timeout" from="TextContent/CharacterWait" to="TextContent/Text" method="_on_character_wait_timeout"]

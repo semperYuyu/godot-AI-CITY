@@ -4,3 +4,7 @@
 
 [node name="GlobalVariables" type="Node" unique_id=1933414563]
 script = ExtResource("1_m5i73")
+
+[node name="InteractTimer" type="Timer" parent="." unique_id=1624228603]
+wait_time = 0.1
+one_shot = true

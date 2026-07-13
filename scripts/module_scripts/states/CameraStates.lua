@@ -17,9 +17,6 @@ local function zoomCamera(camera, event)
 end;
 
 local function getMousePos(camera, event)
-	if not camera.mouse_delta then
-		camera.mouse_delta = Vector2.ZERO;
-	end
 	if event:is_class("InputEventMouseMotion") then
 		camera.mouse_delta = event.relative;
 	end
