@@ -1,11 +1,18 @@
 local textbox = {
-	extends = Control,
+	extends = Control;
 }
 
 function textbox:_ready()
+	if not self.total_dialogue then
+		self.total_dialogue = {
+			"you forgor to set self.total_dialogue";
+			"just do self.total_dialogue = {\'text\'; \'text\' ; \'text\'} in _ready() or under the extends"
+		}
+	end;
 	local StateController = require("StateController")
 	local TextBoxStates = require("TextBoxStates")
-	StateController.newTextBox(self, TextBoxStates.Active)
+	local TextNode = self:get_node("TextContent/Text")
+	StateController.newTextBox(self, TextNode, TextBoxStates.Active)
 end;
 
 function textbox:_input(event)

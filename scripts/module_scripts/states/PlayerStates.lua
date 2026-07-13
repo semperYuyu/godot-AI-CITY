@@ -91,7 +91,7 @@ PlayerStates.Walk = {
 
 	Physics_Update = function (self, dt)
 		self.direction = Input:get_vector("MOVE_LEFT", "MOVE_RIGHT", "MOVE_FORWARD", "MOVE_BACKWARD"):normalized()
-		self.velocity = self.camera.global_transform.basis * Vector3(self.direction.x, 0, self.direction.y) * self.walkSpeed
+		self.velocity = self.Camera.global_transform.basis * Vector3(self.direction.x, 0, self.direction.y) * self.walkSpeed
 		self:move_and_slide()
 		allowMouseLockToggle()
 	end;

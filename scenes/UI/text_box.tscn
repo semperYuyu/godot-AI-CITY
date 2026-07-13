@@ -1,6 +1,5 @@
 [gd_scene format=3 uid="uid://c2ssllmammc33"]
 
-[ext_resource type="Script" uid="uid://b0iihpn74rot" path="res://scripts/Text.lua" id="1_40ig8"]
 [ext_resource type="Script" uid="uid://bl14p2nsbpel6" path="res://scripts/textbox.lua" id="1_o8p8f"]
 
 [node name="TextBox" type="Control" unique_id=349000054]
@@ -76,10 +75,3 @@ grow_vertical = 2
 bbcode_enabled = true
 autowrap_mode = 2
 text_direction = 1
-script = ExtResource("1_40ig8")
-
-[node name="CharacterWait" type="Timer" parent="TextContent" unique_id=358919736]
-wait_time = 0.00999999999999999
-autostart = true
-
-[connection signal="timeout" from="TextContent/CharacterWait" to="TextContent/Text" method="_on_character_wait_timeout"]
