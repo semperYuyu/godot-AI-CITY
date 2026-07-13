@@ -5,10 +5,8 @@ StateController.add(NPCStateController);
 
 NPCStateController.new = function(NPCNode)
 
-	if not NPCNode then
-		error("NPC .new needs a CharacterBody3D as its only parameter");
-	elseif NPCNode:get_class() ~= "CharacterBody3D" then
-		error("NPCNode needs to be a CharacterBody3D");
+	if NPCNode:get_class() ~= "CharacterBody3D" or not NPCNode then
+		error("NPC .new() needs a CharacterBody3D as its only parameter");
 	end;
 
 	NPCNode.currentState = StateController.currentState;
@@ -16,6 +14,7 @@ NPCStateController.new = function(NPCNode)
 	NPCNode.process = StateController.process;
 	NPCNode.physics_process = StateController.physics_process;
 	NPCNode.input = StateController.input;
+	
 	NPCNode:switchState(NPCStates.Idle)
 end;
 

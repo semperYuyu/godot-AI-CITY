@@ -1,27 +1,28 @@
 local PlayerStateController = {};
 StateController = require("StateController");
-PlayerStates = require("PlayerStates")
+PlayerStates = require("PlayerStates");
 StateController.add(PlayerStateController);
 
--- StateController.newPlayer = function (PlayerNode, CameraNode)
--- 	if not PlayerNode then
--- 		error(".newPlayer() function needs a CharacterBody3d node passed as first parameter\nSyntax is \".newPlayer(--> PlayerNode <--, defaultState)\"")
---  elseif not CameraNode then
---    error("im not typing all that again !!!")
--- 	end;
--- 	-- update to iterate and dynamically find a camera node
-
--- 	PlayerNode.Camera = CameraNode
--- 	PlayerNode:switchState(defaultState);
--- end; -- check for node TYPE too
-
 PlayerStateController.new = function(PlayerNode, CameraNode)
-  -- make CameraNode findable, dont pass it in
-  Node.currentState = StateController.currentState;
-	Node.switchState = StateController.switchState;
-	Node.process = StateController.process;
-	Node.physics_process = StateController.physics_process;
-	Node.input = StateController.input;
+  if PlayerNode:get_class() ~= "CharacterBody3D" or not PlayerNode then
+    error("Player .new() needs CharacterBody3D as its first parameter");
+  elseif CameraNode:get_class() == "Camera3D" then
+    print("It is very recommended that Camera Node not be a direct Camera3D, and follows this hierarchy:");
+    print("ParentNode/HorizontalPivotNode/VerticalPivotNode/SpringArm3D/Camera3D");
+    print("Parent, Horizontal, and Vertical Pivot can be Node3D");
+    print("Pass in --> Horizontal Pivot <-- as the Camera Node");
+  elseif not CameraNode then
+    error("Player .new() needs a Camera passed as second parameter, please read console after doing so");
+  end;
+
+  PlayerNode.Camera = CameraNode;
+  PlayerNode.currentState = StateController.currentState;
+	PlayerNode.switchState = StateController.switchState;
+	PlayerNode.process = StateController.process;
+	PlayerNode.physics_process = StateController.physics_process;
+	PlayerNode.input = StateController.input;
+
+  PlayerNode:switchState(PlayerStates.Idle);
 end;
 
 return PlayerStateController;
