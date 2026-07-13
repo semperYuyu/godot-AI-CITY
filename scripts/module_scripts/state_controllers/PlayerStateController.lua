@@ -1,7 +1,6 @@
 local PlayerStateController = {};
 StateController = require("StateController");
 PlayerStates = require("PlayerStates");
-StateController.add(PlayerStateController);
 
 PlayerStateController.new = function(PlayerNode, CameraNode)
   if PlayerNode:get_class() ~= "CharacterBody3D" or not PlayerNode then

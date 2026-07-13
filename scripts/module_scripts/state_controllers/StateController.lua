@@ -6,11 +6,6 @@ local StateController = {
 	};
 }
 
-StateController.add = function(NewStateController)
-	setmetatable(NewStateController, { __index = StateController })
-	return;
-end;
-
 StateController.switchState = function (self, state)
 	self.currentState.Exit(self)
 	self.currentState = state;

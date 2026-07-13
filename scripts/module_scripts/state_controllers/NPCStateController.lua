@@ -1,7 +1,6 @@
 local NPCStateController = {};
 StateController = require("StateController");
 NPCStates = require("NPCStates");
-StateController.add(NPCStateController);
 
 NPCStateController.new = function(NPCNode)
 
@@ -14,7 +13,7 @@ NPCStateController.new = function(NPCNode)
 	NPCNode.process = StateController.process;
 	NPCNode.physics_process = StateController.physics_process;
 	NPCNode.input = StateController.input;
-	
+
 	NPCNode:switchState(NPCStates.Idle)
 end;
 

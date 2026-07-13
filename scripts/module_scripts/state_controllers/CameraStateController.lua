@@ -1,7 +1,6 @@
 local CameraStateController = {};
 StateController = require("StateController");
 CameraStates = require("CameraStates");
-StateController.add(CameraStateController);
 
 CameraStateController.new = function(CameraNode)
   if not CameraNode then
