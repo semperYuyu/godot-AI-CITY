@@ -3,10 +3,9 @@ local player = {
 }
 
 function player:_ready()
-	local StateController = require("StateController")
-	local PlayerStates = require("PlayerStates")
+	local PlayerStateController = require("PlayerStateController");
 	local PlayerCamera = self:get_node("Camera/HorizontalPivot")
-	StateController.newPlayer(self, PlayerCamera, PlayerStates.Idle)
+	PlayerStateController.new(self, PlayerCamera)
 end;
 
 function player:_process(dt)
