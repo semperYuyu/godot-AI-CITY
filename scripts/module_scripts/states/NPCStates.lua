@@ -15,7 +15,8 @@ local function randomAngle(maxDegrees)
 end;
 
 local function distanceToPlayer(NPC)
-	return NPC.global_position:distance_to(NPC.target.global_position)
+	local player_position = Vector3(NPC.target.global_position.x, 0, NPC.target.global_position.z)
+	return NPC.global_position:distance_to(player_position)
 end;
 
 NPCStates.Idle = {

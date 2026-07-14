@@ -1,10 +1,20 @@
 local StateController = {
 	currentState = {
 		Exit = function (self)
+			if not self.name then self.name = "<<Unknown>>" end;
 			print("Initializing State Machine for " .. self.name .. "...")
 		end;
 	};
 }
+
+StateController.new = function(Node, defaultState)
+	Node.currentState = StateController.currentState;
+	Node.switchState = StateController.switchState;
+	Node.process = StateController.process;
+	Node.physics_process = StateController.physics_process;
+	Node.input = StateController.input;
+  Node:switchState(defaultState);
+end;
 
 StateController.switchState = function (self, state)
 	self.currentState.Exit(self)
