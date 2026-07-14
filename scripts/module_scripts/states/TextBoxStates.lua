@@ -1,13 +1,20 @@
 local TextBoxStates = {
 	extends = Node,
 }
+
 local function render(ControlNode)
 	local current_char = ControlNode.current_text:sub(ControlNode.revealed_count, ControlNode.revealed_count)
-	print(current_char)
-	if current_char == "," then
+	local special_chars = {",", ".", "?", "!"}
+	local delay = false;
+		for _, v in ipairs(special_chars) do
+			if current_char == v then
+				delay = true
+			end
+		end;
+	if delay then
 		ControlNode.max_time = 0.5
 	else
-		ControlNode.max_time = 0.02
+		ControlNode.max_time = 0.1
 	end
 
 	local revealed = ControlNode.current_text:sub(1, ControlNode.revealed_count)
@@ -26,8 +33,7 @@ local function startInteraction(ControlNode)
 	GlobalVariables.global_interact = false
 
 	for _, v in ipairs(GlobalVariables.interacted) do
-		if table.concat(ControlNode.total_dialogue) == v then
-			print('alternatin dialogue')
+		if table.concat(ControlNode.total_dialogue) == v and ControlNode.alternate_dialogue then
 			ControlNode.total_dialogue = ControlNode.alternate_dialogue
 		end
 	end;
@@ -60,6 +66,7 @@ TextBoxStates.Active = {
 
     self.TextNode.text = self.current_text -- dont nil
 		render(self)
+		return;
 	end;
 
 	Exit = function(self)
@@ -69,6 +76,7 @@ TextBoxStates.Active = {
 		self.max_time = nil;
 		self.current_text = nil
 		self.revealed_count = nil;
+		return;
 	end;
 
 	Input = function(self, event)
@@ -76,6 +84,7 @@ TextBoxStates.Active = {
 			self.revealed_count = #self.current_text;
 			render(self)
 		end;
+		return;
 	end;
 
 	Update = function(self, dt)
@@ -93,6 +102,7 @@ TextBoxStates.Active = {
 	end;
 
 	Physics_Update = function(self, dt)
+		return;
 	end;
 }
 
@@ -102,21 +112,17 @@ TextBoxStates.Idle = {
 	-- im not actually calling it textProperty just dont know what to call it yet
 	-- probably self.dialogue
 	Enter = function(self)
-		print('waitin for input')
 		self.dialogue_index = self.dialogue_index + 1
-
+		return;
 	end;
 
 	Exit = function(self)
-		print('movin on !')
+		return;
 	end;
 
 	Input = function(self, event)
 		if Input:is_action_just_pressed("INTERACT") then
-			print(self.dialogue_index)
-			print(#self.total_dialogue)
 			if self.dialogue_index <= #self.total_dialogue then
-
 				self:switchState(TextBoxStates.Active)
 			else
 
@@ -130,11 +136,11 @@ TextBoxStates.Idle = {
 	end;
 
 	Update = function(self, dt)
-
+		return;
 	end;
 
 	Physics_Update = function(self, dt)
-		local devNull = 0
+		return;
 	end;
 }
 

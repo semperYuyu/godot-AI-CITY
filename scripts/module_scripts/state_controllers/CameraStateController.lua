@@ -15,13 +15,7 @@ CameraStateController.new = function(CameraNode)
   CameraNode.HPivot = CameraNode:get_node("./HorizontalPivot");
 	CameraNode.VPivot = CameraNode:get_node("./HorizontalPivot/VerticalPivot");
 	CameraNode.CameraSpring = CameraNode:get_node("./HorizontalPivot/VerticalPivot/CameraSpring");
-  CameraNode.currentState = StateController.currentState;
-	CameraNode.switchState = StateController.switchState;
-	CameraNode.process = StateController.process;
-	CameraNode.physics_process = StateController.physics_process;
-	CameraNode.input = StateController.input;
-
-  CameraNode:switchState(CameraStates.Locked);
+  StateController.new(CameraNode, CameraStates.Locked)
 end;
 
 return CameraStateController;

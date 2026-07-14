@@ -65,12 +65,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.82458, 14.972355, -28.494
 [node name="NPCs" type="Node3D" parent="." unique_id=344379041]
 
 [node name="NPC" parent="NPCs" unique_id=418314309 instance=ExtResource("4_hlc4h")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.8215914, 17.121456, -127.894226)
-
-[node name="NPC2" parent="NPCs" unique_id=642003086 instance=ExtResource("4_hlc4h")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.14141, 12.224225, -135.33588)
-
-[node name="NPC3" parent="NPCs" unique_id=1345823828 instance=ExtResource("4_hlc4h")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 15.218547, -115.23783)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.8215914, 17.121456, -101.3558)
 
 [node name="TextBoxes" type="Node3D" parent="." unique_id=1589164431]
