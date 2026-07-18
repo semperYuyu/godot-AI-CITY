@@ -126,15 +126,11 @@ PlayerStates.Jump = {
 	end;
 
 	Physics_Update = function (self, dt)
-		-- self.jumpStrength = self.jumpStrength - self.gravity * dt
-		-- self:move_and_slide() <-- previous jump logic
-
 		if Input:is_action_pressed("JUMP") and self.velocity.y < self.max_jump_strength then
 			self.velocity = Vector3(self.velocity.x, self.velocity.y + (self.max_jump_strength / 5) * dt, self.velocity.z)
 		end;
 
 		self.velocity = Vector3(self.velocity.x, self.velocity.y - self.gravity * dt, self.velocity.z)
-		print(self.velocity.y);
 		self:move_and_slide()
 	end;
 }
