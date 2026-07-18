@@ -22,7 +22,7 @@ local function attemptJump()
 end;
 
 local function allowMouseLockToggle()
-	if Input:is_action_just_pressed("MENU") then
+	if Input:is_action_just_pressed("MENU") and GlobalVariables.global_interact then
 		Input.mouse_mode = Input.mouse_mode == Input.MOUSE_MODE_VISIBLE and Input.MOUSE_MODE_CAPTURED;
 	end;
 
@@ -100,15 +100,17 @@ PlayerStates.Walk = {
 PlayerStates.Jump = {
 	Enter = function (self)
 		self.gravity = GlobalVariables.gravity;
-		self.jumpStrength = 25;
-		self.velocity = Vector3(self.velocity.x, self.velocity.y + self.jumpStrength, self.velocity.z)
+		self.minimum_jump_strength = 30
+		self.max_jump_strength = 300;
+		self.velocity = Vector3(self.velocity.x, self.minimum_jump_strength, self.velocity.z)
 		GlobalVariables.global_interact = false;
 		return;
 	end;
 
 	Exit = function (self)
 		self.gravity = nil;
-		self.jumpStrength = nil;
+		self.minimum_jump_strength = nil;
+		self.max_jump_strength = nil;
 		return;
 	end;
 
@@ -117,14 +119,22 @@ PlayerStates.Jump = {
 	end;
 
 	Update = function (self, dt)
-			if self.jumpStrength <= 0 then
+			if self.velocity.y <= 0 then
 			self:switchState(PlayerStates.Fall)
 			return;
 		end;
 	end;
 
 	Physics_Update = function (self, dt)
-		self.jumpStrength = self.jumpStrength - self.gravity * dt
+		-- self.jumpStrength = self.jumpStrength - self.gravity * dt
+		-- self:move_and_slide() <-- previous jump logic
+
+		if Input:is_action_pressed("JUMP") and self.velocity.y < self.max_jump_strength then
+			self.velocity = Vector3(self.velocity.x, self.velocity.y + (self.max_jump_strength / 5) * dt, self.velocity.z)
+		end;
+
+		self.velocity = Vector3(self.velocity.x, self.velocity.y - self.gravity * dt, self.velocity.z)
+		print(self.velocity.y);
 		self:move_and_slide()
 	end;
 }
