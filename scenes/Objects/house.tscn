@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cwdwyefipbpcb"]
 
-[ext_resource type="Script" uid="uid://y1kx03v7k01j" path="res://scripts/house.lua" id="1_en27d"]
+[ext_resource type="PackedScene" uid="uid://ib8nnkworldd" path="res://scenes/Objects/interact_area.tscn" id="2_nkyfa"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h6ihx"]
 albedo_color = Color(0.86318916, 0.07497024, 0, 1)
@@ -25,12 +25,9 @@ material = SubResource("StandardMaterial3D_en27d")
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_nkyfa"]
 data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_en27d"]
-
 [node name="House" type="StaticBody3D" unique_id=1607032137]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12.204881, 0)
 collision_mask = 6
-script = ExtResource("1_en27d")
 
 [node name="Roof" type="MeshInstance3D" parent="." unique_id=2113635092]
 transform = Transform3D(31.138165, 0, 0, 0, 25, 0, 0, 0, 33.786, 0, 23.629158, 0)
@@ -56,17 +53,5 @@ mesh = SubResource("BoxMesh_nkyfa")
 transform = Transform3D(5, 0, 0, 0, 10, 0, 0, 0, 1, 0, -7.548475, -13.014638)
 shape = SubResource("ConcavePolygonShape3D_nkyfa")
 
-[node name="InteractArea" type="Area3D" parent="." unique_id=506796803]
-transform = Transform3D(6, 0, 0, 0, 6, 0, 0, 0, 6, 0.12312293, -9.6496525, -15.958366)
-collision_layer = 8
-collision_mask = 2
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractArea" unique_id=2037310835]
-shape = SubResource("BoxShape3D_en27d")
-debug_color = Color(0.9730944, 0, 0.43977916, 0.41960785)
-
-[node name="CooldownTimer" type="Timer" parent="InteractArea" unique_id=1593055603]
-
-[connection signal="body_entered" from="InteractArea" to="." method="_on_interact_area_body_entered"]
-[connection signal="body_exited" from="InteractArea" to="." method="_on_interact_area_body_exited"]
-[connection signal="timeout" from="InteractArea/CooldownTimer" to="." method="_on_cooldown_timer_timeout"]
+[node name="InteractArea" parent="." unique_id=2032948242 instance=ExtResource("2_nkyfa")]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, -10.02885, -16.032364)

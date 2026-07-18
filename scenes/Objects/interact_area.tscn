@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://ib8nnkworldd"]
+
+[ext_resource type="Script" uid="uid://cfn4vly0pfhxt" path="res://scripts/interact_area.lua" id="1_ka2nv"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_e1684"]
+
+[node name="InteractArea" type="Area3D" unique_id=2032948242]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
+collision_layer = 8
+collision_mask = 6
+script = ExtResource("1_ka2nv")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1979898611]
+shape = SubResource("BoxShape3D_e1684")
+debug_color = Color(0.95286554, 2.0214916e-06, 0.55895215, 0.41960785)

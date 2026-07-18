@@ -15,13 +15,7 @@ PlayerStateController.new = function(PlayerNode, CameraNode)
   end;
 
   PlayerNode.Camera = CameraNode;
-  PlayerNode.currentState = StateController.currentState;
-	PlayerNode.switchState = StateController.switchState;
-	PlayerNode.process = StateController.process;
-	PlayerNode.physics_process = StateController.physics_process;
-	PlayerNode.input = StateController.input;
-
-  PlayerNode:switchState(PlayerStates.Idle);
+  StateController.new(PlayerNode, PlayerStates.Idle);
 end;
 
 return PlayerStateController;

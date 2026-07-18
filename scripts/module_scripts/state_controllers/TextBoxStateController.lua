@@ -12,18 +12,11 @@ TextBoxStateController.new = function(ControlNode, TextNode)
 		error("Set the total_dialogue property of the Control Node; It needs to be a lua table.")
 	end;
 
-
   ControlNode.TextNode = TextNode;
   ControlNode.TextNode:add_theme_font_size_override("normal_font_size", 90); -- check window size to try set this dynamically
 	ControlNode.TextNode.bbcode_enabled = true;
 	ControlNode.TextNode.scroll_active = false;
-  ControlNode.currentState = StateController.currentState;
-	ControlNode.switchState = StateController.switchState;
-	ControlNode.process = StateController.process;
-	ControlNode.physics_process = StateController.physics_process;
-	ControlNode.input = StateController.input;
-
-  ControlNode:switchState(TextBoxStates.Active);
+  StateController.new(ControlNode, TextBoxStates.Active);
 end;
 
 return TextBoxStateController;

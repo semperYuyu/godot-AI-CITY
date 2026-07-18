@@ -3,18 +3,14 @@ StateController = require("StateController");
 NPCStates = require("NPCStates");
 
 NPCStateController.new = function(NPCNode)
-
 	if NPCNode:get_class() ~= "CharacterBody3D" or not NPCNode then
 		error("NPC .new() needs a CharacterBody3D as its only parameter");
 	end;
 
-	NPCNode.currentState = StateController.currentState;
-	NPCNode.switchState = StateController.switchState;
-	NPCNode.process = StateController.process;
-	NPCNode.physics_process = StateController.physics_process;
-	NPCNode.input = StateController.input;
-
-	NPCNode:switchState(NPCStates.Idle)
+	local PlayerDetectArea = NPCNode:get_node("PlayerDetectArea")
+	PlayerDetectArea:connect("body_entered", Callable(function(body) NPCNode.target = body end))
+	PlayerDetectArea:connect("body_exited", Callable(function() NPCNode.target = nil end))
+	StateController.new(NPCNode, NPCStates.Idle);
 end;
 
 return NPCStateController;
