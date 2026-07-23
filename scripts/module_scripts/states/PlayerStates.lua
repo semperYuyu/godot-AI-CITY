@@ -29,6 +29,23 @@ local function allowMouseLockToggle()
 	return;
 end;
 
+local function playSound(self, sound)
+	self.SoundController.stream = sound
+	self.SoundController:play()
+	return;
+end;
+
+local function loopAnimation(self, animation)
+	self.Model:get_node("AnimationPlayer"):get_animation("Walk").loop_mode = Animation.LOOP_LINEAR
+	self.Model:get_node("AnimationPlayer"):play(animation)
+	return;
+end;
+
+local function stopAnimation(self)
+	self.Model:get_node("AnimationPlayer"):stop()
+	return;
+end;
+
 PlayerStates.Idle = {
 	Enter = function (self)
 		return;
@@ -63,12 +80,14 @@ PlayerStates.Idle = {
 
 PlayerStates.Walk = {
 	Enter = function (self)
-		self.walkSpeed = 20
+		self.walkSpeed = 8
+		loopAnimation(self, "Walk");
 		return;
 	end;
 
 	Exit = function (self)
 		self.walkSpeed = nil;
+		stopAnimation(self);
 		return;
 	end;
 
@@ -92,6 +111,9 @@ PlayerStates.Walk = {
 	Physics_Update = function (self, dt)
 		self.direction = Input:get_vector("MOVE_LEFT", "MOVE_RIGHT", "MOVE_FORWARD", "MOVE_BACKWARD"):normalized()
 		self.velocity = self.Camera.global_transform.basis * Vector3(self.direction.x, 0, self.direction.y) * self.walkSpeed
+		if self.velocity:length() > 0 then
+		self.Model.rotation = Vector3(self.rotation.x, atan2(self.velocity.x, self.velocity.z), self.rotation.z)
+		end
 		self:move_and_slide()
 		allowMouseLockToggle()
 	end;
@@ -137,7 +159,8 @@ PlayerStates.Jump = {
 
 PlayerStates.Fall = {
 	Enter = function (self)
-		print('im falling !')
+		local fall_sound = ResourceLoader:load("res://audio/Flowery_voiceclip_I'm_falling.wav")
+		playSound(self, fall_sound)
 		self.gravity = GlobalVariables.gravity;
 		GlobalVariables.global_interact = false;
 		return;

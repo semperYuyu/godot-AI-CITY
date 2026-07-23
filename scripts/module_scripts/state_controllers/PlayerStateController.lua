@@ -14,6 +14,9 @@ PlayerStateController.new = function(PlayerNode, CameraNode)
     error("Player .new() needs a Camera passed as second parameter, please read console after doing so");
   end;
 
+  PlayerNode.Model = PlayerNode:get_node("Model")
+  PlayerNode.SoundController = AudioStreamPlayer3D:new()
+  PlayerNode:add_child(PlayerNode.SoundController)
   PlayerNode.Camera = CameraNode;
   StateController.new(PlayerNode, PlayerStates.Idle);
 end;

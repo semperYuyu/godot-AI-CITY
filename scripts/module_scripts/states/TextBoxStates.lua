@@ -49,11 +49,17 @@ local function endInteraction(ControlNode)
 	return
 end;
 
+local function playSound(self, sound)
+	self.SoundController.stream = sound
+	self.SoundController:play()
+end;
+
 TextBoxStates.Active = {
 	-- draw text until no more text to draw
 	-- this is default state
 	Enter = function(self)
 		startInteraction(self)
+		self.sound = ResourceLoader:load("res://audio/undertale-text.mp3")
     self.hidden_colour = "black";
     self.reveal_colour = "white";
 
@@ -83,6 +89,7 @@ TextBoxStates.Active = {
 		if Input:is_action_just_pressed("ALTERNATE") then
 			self.revealed_count = #self.current_text;
 			render(self)
+			playSound(self, self.sound)
 		end;
 		return;
 	end;
@@ -97,6 +104,7 @@ TextBoxStates.Active = {
 		if self.timer >= self.max_time then
 			self.timer = 0
 			render(self)
+			playSound(self, self.sound)
 		return;
 		end
 	end;

@@ -12,6 +12,8 @@ TextBoxStateController.new = function(ControlNode, TextNode)
 		error("Set the total_dialogue property of the Control Node; It needs to be a lua table.")
 	end;
 
+  ControlNode.SoundController = AudioStreamPlayer3D:new();
+  ControlNode:add_child(ControlNode.SoundController);
   ControlNode.TextNode = TextNode;
   ControlNode.TextNode:add_theme_font_size_override("normal_font_size", 90); -- check window size to try set this dynamically
 	ControlNode.TextNode.bbcode_enabled = true;
